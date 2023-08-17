@@ -5,4 +5,4 @@ class Window:
         self.ratio = width / height
         self.viewport_width = width
         self.viewport_height = height * 0.79
-        self.viewport_ratio = self.vw / self.vh
+        self.viewport_ratio = self.viewport_width / self.viewport_height

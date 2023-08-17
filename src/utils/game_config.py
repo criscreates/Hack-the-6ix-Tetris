@@ -15,4 +15,4 @@ class GameConfig:
         window: Window,
         images: Images,
     ) -> None:
-    pass
+        pass
