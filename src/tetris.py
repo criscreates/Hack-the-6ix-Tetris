@@ -18,13 +18,14 @@ class Tetris():
         pygame.display.set_caption("Tetris")
         window = Window(288, 512)
         screen = pygame.display.set_mode((window.width, window.height))
+        images = Images()
 
         self.config = GameConfig(
             screen = screen,
             clock = pygame.time.Clock(),
             fps = 60,
             window = window,
-            images = Images(),
+            images = images,
         )
 
     def test(self):
