@@ -6,7 +6,7 @@ from .entities import (
     Bag,
     Board,
     Hold,
-    Pieces,
+    Piece,
     Score,
 )
 

@@ -1,5 +1,5 @@
 from ..utils import GameConfig
 
-class Pieces():
+class Piece():
     def __init__(self, config: GameConfig) -> None:
         pass
