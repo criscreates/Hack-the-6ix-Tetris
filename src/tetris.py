@@ -46,3 +46,8 @@ class Tetris():
     def test_print_board(self) -> list[list[int]]:
         for row in reversed(self.board.board):
             print(row)
+    
+    def test_rotation(self):
+        piece = Piece(self.config,PieceType.T)
+        piece.rotate_block(RotationDirection.CW)
+
