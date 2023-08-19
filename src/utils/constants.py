@@ -49,7 +49,7 @@ MoveDirection = Enum('MoveDirection', [
 
 
 RotationDirection = Enum('RotationDirection', [
-    'CW'
+    'CW',
     'CCW'
 ])
 
