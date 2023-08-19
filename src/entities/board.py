@@ -38,7 +38,7 @@ class Board():
             for v in piece.get_positions_as_tuples():
                 if v.x < 0 or v.y < 0:
                     return False
-                if not self.board[v.y][v.x] == None:
+                if self.board[v.y][v.x] != None:
                     return False
         except IndexError:
             return False
