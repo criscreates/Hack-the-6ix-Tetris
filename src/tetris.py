@@ -38,3 +38,6 @@ class Tetris():
         piece = Piece(self.config, PieceType['T'])
 
         #print(piece.get_positions())
+
+    def testPiece(self):
+        piece.rotate_block(RotationDirection.CCW)

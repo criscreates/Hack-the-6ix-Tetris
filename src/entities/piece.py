@@ -1,7 +1,6 @@
 from ..utils import GameConfig
 from ..utils import RotationState
-from ..utils import PieceType, Point, PIECE_STARTS, POS4
-
+from ..utils import PieceType, Point, PIECE_STARTS, POS4, RotationLookUpTable, RotationDirection 
 class Piece():
     def __init__(self, config: GameConfig, piece_type) -> None:
         self.type = piece_type
@@ -18,3 +17,14 @@ class Piece():
 #    def get_positions_vector(self) -> None:
 #        return self.get_positions()
     
+    def rotate_block(self, rotation_direction: RotationDirection):
+        # mutate here
+        rotation = self.rotation
+        if (rotation_direction==RotationDirection.CCW):
+             #goleft
+        elif (rotation_direction==RotationDirection.CW):
+             #goright
+        print(RotationLookUpTable[self.type][rotation_direction])
+        return(RotationLookUpTable[self.type][rotation_direction])
+
+
