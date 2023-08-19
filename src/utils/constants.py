@@ -48,11 +48,10 @@ MoveDirection = Enum('MoveDirection', [
 ])
 
 
-class RotationDirection(IntEnum):
-    CW = pi/2
-    CCW = (3*pi)/2
-
-
+RotationDirection = Enum('RotationDirection', [
+    'CW'
+    'CCW'
+])
 
 Cell = Enum('Cell', [
     'Placed',
