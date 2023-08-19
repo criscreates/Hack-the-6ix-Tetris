@@ -1,6 +1,6 @@
 from .piece import Piece
 from ..utils import GameConfig
-from ..utils.constants import *
+from ..utils import Cell
 
 class Board():
     def __init__(self, config: GameConfig, prefill: list[list[Cell]] = None) -> None:

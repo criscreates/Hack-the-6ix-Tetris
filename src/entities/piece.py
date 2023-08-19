@@ -1,5 +1,6 @@
 from ..utils import GameConfig
-from ..utils.constants import *
+from ..utils import RotationState
+from ..utils import PieceType, Point, PIECE_STARTS, POS4
 
 class Piece():
     def __init__(self, config: GameConfig, piece_type) -> None:
@@ -8,6 +9,7 @@ class Piece():
             Point(5,20),
             PIECE_STARTS[piece_type]
         )
+        self.rotation = RotationState
 
     def get_positions(self) -> None:
         origin = self.pos4.ORIGIN
