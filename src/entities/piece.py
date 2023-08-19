@@ -51,8 +51,8 @@ class Piece():
         new_y =   p.x * bad_sin(rotation_direction)
         return Point(new_x,new_y)
     
-    def move_origin_to(self, new_pos):
-        return Piece(self.config, self.type, new_pos)
+    def rotate_fake():
+        return Piece(self.config, self.type, )
 
     def move(self, board, vector: Point) -> bool:
         tempPos = self.origin.add(vector)
