@@ -31,10 +31,23 @@ class Piece():
         return (origin, *map(lambda v : v.add(origin), self.pos4.BODY))
     
     def get_Rotated(self, rotation_direction: RotationDirection):
-        self.pos4.BODY[1].x
+        
+        return (
+            self.rotate_math(self.BODY[0],rotation_direction),
+            self.rotate_math(self.BODY[1],rotation_direction),
+            self.rotate_math(self.BODY[2],rotation_direction)
+        )
 
-    def rotate_math(o_point: Point,rotation_direction: RotationDirection):
-        pass
+
+    def rotate_math(o_point: Point,rotation_direction: RotationDirection) -> Point:
+        x = o_point.x
+        y = o_point.y
+        new_x = 0
+        new_y = 0
+        
+        new_x = x*cos(int(rotation_direction)) - y*sin(int(rotation_direction))
+        new_y = x*sin(int(rotation_direction)) - y*cos(int(rotation_direction))
+        return Point(new_x,new_y)
 
     def get_positions_vector(self) -> tuple[Point, Point, Point, Point]:
         return tuple(map(lambda x: x.xy, self.get_positions()))
