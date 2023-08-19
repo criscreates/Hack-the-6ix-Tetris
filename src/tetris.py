@@ -37,4 +37,4 @@ class Tetris():
         hold = Hold(self.config)
         piece = Piece(self.config, PieceType['T'])
 
-        print(piece.get_positions())
+        #print(piece.get_positions())
