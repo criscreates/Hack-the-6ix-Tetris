@@ -37,13 +37,12 @@ class Tetris():
         hold = Hold(self.config)
         piece = Piece(self.config, PieceType.T)
 
-
-        print(piece.get_positions_vector())
-        piece.fall()
+        piece.fall(self.board)
+        piece.fall(self.board)
         print(piece.get_positions_vector())
         self.board.place_piece(piece)
         self.test_print_board()
     
     def test_print_board(self) -> list[list[int]]:
-        for row in self.board.board:
+        for row in reversed(self.board.board):
             print(row)
