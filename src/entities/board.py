@@ -8,9 +8,9 @@ class Board():
         self.piece = piece
     
     def update(self):
-        for _ in range(20):
+        for _ in range(23):
             self.piece.fall(self)
-        for _ in range(5):
+        for _ in range(7):
             self.piece.strafe(self, 1)
 
     def init_board(self) -> list[list[Cell]]:

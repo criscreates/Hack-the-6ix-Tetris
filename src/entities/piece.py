@@ -44,7 +44,7 @@ class Piece():
         return(RotationLookUpTable[self.type][rotation_direction])
 
     def get_positions_vector(self) -> tuple[Point, Point, Point, Point]:
-        return tuple(map(lambda x: x.xy(), self.get_positions()))
+        return tuple(map(lambda x: x.xy, self.get_positions()))
     
     def move_to(self, pos4: POS4):
         return Piece(self.config, self.type, pos4)
