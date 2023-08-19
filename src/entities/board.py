@@ -11,10 +11,13 @@ class Board():
 
 
     def place_piece(self, piece: Piece) -> bool:
-        for v in piece.get_positions():
-            if self.board[v.y][v.x]:
-                return False
-        
+        try:        
+            for v in piece.get_positions():
+                if not self.board[v.y][v.x] == None:
+                    return False
+        except IndexError:
+            return False
+
         for v in piece.get_positions():
             self.board[v.y][v.x] = Cell.Placed
 
