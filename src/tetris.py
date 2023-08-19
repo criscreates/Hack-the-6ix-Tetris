@@ -38,7 +38,7 @@ class Tetris():
         self.score = Score(self.config)
 
         self.board.update()
-        print(self.board.piece.get_positions_vector())
+        print('After Updates: ', self.board.piece.get_positions_vector())
         self.board.place_piece()
         self.test_print_board()
     

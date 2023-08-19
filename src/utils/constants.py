@@ -18,6 +18,9 @@ POS4 = namedtuple('POS4', [
     'BODY',
 ])
 
+BOARD_WIDTH = 10
+BOARD_HEIGHT = 20
+
 class PieceType (IntEnum):
     T = 1
     I = 2
