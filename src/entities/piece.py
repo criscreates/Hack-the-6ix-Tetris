@@ -48,14 +48,14 @@ class Piece():
         new_y =   p.x * bad_sin(rotation_direction)
         return Point(new_x,new_y)
     
-    def move_to(self, new_pos):
+    def move_origin_to(self, new_pos):
         return Piece(self.config, self.type, new_pos)
 
     def move(self, board, vector: Point) -> bool:
         tempPos = self.origin.add(vector)
-        print('Move: ', self.move_to(tempPos).get_positions_vector())
+        print('Move: ', self.move_origin_to(tempPos).get_positions_vector())
 
-        if board.valid_place(self.move_to(tempPos)):
+        if board.valid_place(self.move_origin_to(tempPos)):
             self.origin = tempPos
             return True
         else:
