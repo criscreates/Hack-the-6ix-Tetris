@@ -32,6 +32,8 @@ class Board():
     def valid_place(self, piece: Piece) -> bool:
         try:        
             for v in piece.get_positions():
+                if v.x < 0 or v.y < 0:
+                    return False
                 if not self.board[v.y][v.x] == None:
                     return False
         except IndexError:
