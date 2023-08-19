@@ -48,5 +48,7 @@ class Tetris():
     
     def test_rotation(self):
         piece = Piece(self.config,PieceType.T)
-        piece.get_rotated(RotationDirection.CW)
+        print(tuple(map(lambda x: x.xy, piece.get_rotated(RotationDirection.CW))))
+        print(tuple(map(lambda x: x.xy, piece.get_rotated(RotationDirection.CCW))))
+        
 
