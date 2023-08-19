@@ -36,3 +36,5 @@ class Tetris():
         bag = Bag(self.config)
         hold = Hold(self.config)
         piece = Piece(self.config, PieceType['T'])
+
+        print(piece.get_positions())
