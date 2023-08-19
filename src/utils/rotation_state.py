@@ -1,6 +1,3 @@
-from ..entities.piece import Piece
-from .constants import *
-
 class RotationState():
     def __init__(self, rotation: int = 0) -> None:
         self.rotation = rotation
