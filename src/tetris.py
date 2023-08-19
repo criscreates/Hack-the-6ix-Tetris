@@ -31,7 +31,7 @@ class Tetris():
 
     def test(self):
         self.background = Background(self.config)
-        piece = Piece(self.config, PieceType.T)
+        piece = Piece(self.config, PieceType.T, 0)
         bag = Bag(self.config)
         hold = Hold(self.config)
         self.board = Board(self.config, piece)
@@ -47,8 +47,10 @@ class Tetris():
             print(row)
     
     def test_rotation(self):
-        piece = Piece(self.config,PieceType.T)
-        print(tuple(map(lambda x: x.xy, piece.get_rotated(RotationDirection.CW))))
-        print(tuple(map(lambda x: x.xy, piece.get_rotated(RotationDirection.CCW))))
+        piece = Piece(self.config,PieceType.T, 0)
+        piece.get_rotated(RotationDirection.CW)
+        print(piece.get_body_as_tuples())
+        piece.get_rotated(RotationDirection.CW)
+        print(piece.get_body_as_tuples())
         
 
