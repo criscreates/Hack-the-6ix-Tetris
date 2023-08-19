@@ -42,10 +42,10 @@ class Piece():
 
 
     def rotate_math(self, p: Point,rotation_direction: RotationDirection) -> Point:
-        bad_sin = lambda x: 1 if x==pi/2 else -1
+        bad_sin = lambda x: 1 if x==rotation_direction.CW else -1
         
-        new_x = - p.y * bad_sin(int(rotation_direction))
-        new_y =   p.x * bad_sin(int(rotation_direction))
+        new_x = - p.y * bad_sin(rotation_direction)
+        new_y =   p.x * bad_sin(rotation_direction)
         return Point(new_x,new_y)
     
     def move_to(self, new_pos):
