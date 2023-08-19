@@ -35,11 +35,13 @@ class Tetris():
         self.score = Score(self.config)
         bag = Bag(self.config)
         hold = Hold(self.config)
-        piece = Piece(self.config, PieceType.T)
+        piece = Piece(PieceType.T)
 
+#        for i in range(10):
+#            print(bag.pull_piece())
 
         print(piece.get_positions_vector())
-        piece.fall()
+        piece.fall(self.board)
         print(piece.get_positions_vector())
         self.board.place_piece(piece)
         self.test_print_board()
