@@ -23,8 +23,14 @@ class Piece():
     def init_origin(self, piece_type: PieceType) -> Point:
         return Point(BOARD_WIDTH//2-1, BOARD_HEIGHT-1)
 
-    def get_positions(self):
+    def get_positions_as_tuples(self):
         return (self.origin, *map(lambda v : v.add(self.origin), self.body))
+    
+    def get_body_as_tuples(self):
+        return tuple(map(lambda x: x.xy, self.body))
+
+    def get_positions_vector(self) -> tuple[Point, Point, Point, Point]:
+        return tuple(map(lambda x: x.xy, self.get_positions_as_tuples()))
     
     def get_rotated(self, rotation_direction: RotationDirection):
         
@@ -44,9 +50,6 @@ class Piece():
         new_x = x*cos(int(rotation_direction)) - y*sin(int(rotation_direction))
         new_y = x*sin(int(rotation_direction)) - y*cos(int(rotation_direction))
         return Point(new_x,new_y)
-
-    def get_positions_vector(self) -> tuple[Point, Point, Point, Point]:
-        return tuple(map(lambda x: x.xy, self.get_positions()))
     
     def move_to(self, new_pos):
         return Piece(self.config, self.type, new_pos)

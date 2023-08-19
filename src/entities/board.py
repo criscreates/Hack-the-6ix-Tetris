@@ -3,7 +3,11 @@ from ..utils import GameConfig
 from ..utils import Cell
 
 class Board():
-    def __init__(self, config: GameConfig, piece, prefill: list[list[Cell]] = None) -> None:
+    def __init__(self, 
+                 config: GameConfig, 
+                 piece,
+                 prefill: list[list[Cell]] = None,
+                 ) -> None:
         self.board = prefill or self.init_board()
         self.piece = piece
     
@@ -24,14 +28,14 @@ class Board():
         if not self.valid_place(self.piece):
             return False
 
-        for v in self.piece.get_positions():
+        for v in self.piece.get_positions_as_tuples():
             self.board[v.y][v.x] = Cell.Placed
 
         return True
 
     def valid_place(self, piece: Piece) -> bool:
         try:        
-            for v in piece.get_positions():
+            for v in piece.get_positions_as_tuples():
                 if v.x < 0 or v.y < 0:
                     return False
                 if not self.board[v.y][v.x] == None:
