@@ -5,9 +5,7 @@ class Point():
     def __init__(self, x: int, y: int) -> None:
         self.x = x
         self.y = y
-
-    def xy(self):
-        return (self.x,self.y)
+        self.xy = (x,y)
     
     def add(self, v: tuple[int,int]) -> tuple[int,int]:
         return Point(v.x + self.x, v.y + self.y) 
@@ -17,6 +15,9 @@ POS4 = namedtuple('POS4', [
     'ORIGIN',
     'BODY',
 ])
+
+BOARD_WIDTH = 10
+BOARD_HEIGHT = 20
 
 class PieceType (IntEnum):
     T = 1
@@ -46,10 +47,10 @@ MoveDirection = Enum('MoveDirection', [
 ])
 
 
-RotationDirection = Enum('RotationDirection', [
-    'CW',
-    'CCW',
-])
+class RotationDirection(IntEnum):
+    CW = 90
+    CCW = 270
+
 
 
 Cell = Enum('Cell', [
