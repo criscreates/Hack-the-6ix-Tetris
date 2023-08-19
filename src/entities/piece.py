@@ -1,9 +1,6 @@
 from ..utils import GameConfig
 from ..utils import RotationState
-<<<<<<< HEAD
 from ..utils import PieceType, Point, PIECE_STARTS, POS4, RotationLookUpTable, RotationDirection 
-from math import sin, cos
-=======
 from ..utils import (
     PieceType, 
     Point, 
@@ -14,7 +11,7 @@ from ..utils import (
     BOARD_HEIGHT,
     BOARD_WIDTH,
 ) 
->>>>>>> 85bcc9a30fe84d6983369efc78c7619d1482340f
+from math import sin, cos
 
 class Piece():
     def __init__(self, config: GameConfig, piece_type: PieceType, pos4: POS4 = None) -> None:
@@ -33,14 +30,11 @@ class Piece():
         origin = self.pos4.ORIGIN
         return (origin, *map(lambda v : v.add(origin), self.pos4.BODY))
     
-#    def get_positions_vector(self) -> None:
-#        return self.get_positions()
     def get_Rotated(self, rotation_direction: RotationDirection):
         self.pos4.BODY[1].x
 
     def rotate_math(o_point: Point,rotation_direction: RotationDirection):
         pass
-
 
     def get_positions_vector(self) -> tuple[Point, Point, Point, Point]:
         return tuple(map(lambda x: x.xy, self.get_positions()))
