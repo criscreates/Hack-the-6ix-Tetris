@@ -4,7 +4,7 @@ class RotationState():
     
     def circle(self, dir: int) -> int:
         new_rot = (self.rotation + dir) % 4
-        return new_rot if not new_rot == -1 else 3
+        return new_rot if new_rot != -1 else 3
     
     def get_cw(self):
         return RotationState(self.circle(1))

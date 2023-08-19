@@ -1,5 +1,6 @@
 from enum import Enum, IntEnum
 from collections import namedtuple
+from math import pi
 
 class Point():
     def __init__(self, x: int, y: int) -> None:
@@ -47,11 +48,10 @@ MoveDirection = Enum('MoveDirection', [
 ])
 
 
-class RotationDirection(IntEnum):
-    CW = 90
-    CCW = 270
-
-
+RotationDirection = Enum('RotationDirection', [
+    'CW',
+    'CCW'
+])
 
 Cell = Enum('Cell', [
     'Placed',
