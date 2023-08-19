@@ -3,17 +3,15 @@ from ..utils.constants import PieceType
 import random
 
 class Bag():
-    contents = PieceType
     def __init__(self, config: GameConfig) -> None:
-        self.b = []
-    def refill_bag():
-        contents = random.shuffle(['T', 'I', 'O', 'S', 'Z', 'J', 'L'])
-        return contents
-    def pull_piece(bag_contents):
-        pulled_piece = bag_contents[0]
-        del bag_contents[0]
-        return pulled_piece, bag_contents
-        
-
-# b = Bag()
-# b.refill_bag()
+        self.contents = []
+        self.spot = 0
+    def refill_bag(self):
+        self.contents = random.shuffle(['T', 'I', 'O', 'S', 'Z', 'J', 'L'])
+    def pull_piece(self):
+        if self.contents == []:
+            self.contents = self.refill_bag(self)
+        current = self.contents[0]
+        del self.contents[0]
+        self.spot += 1
+        return current      
