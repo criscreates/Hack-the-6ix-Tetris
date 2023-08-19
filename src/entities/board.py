@@ -6,17 +6,30 @@ class Board():
     def __init__(self, config: GameConfig, prefill: list[list[Cell]] = None) -> None:
         self.board = prefill or self.init_board()
 
-    def init_board(self):
+    def init_board(self) -> list[list[Cell]]:
         return [[None for _ in range(10)] for _ in range(20)]
 
+    def clear_board(self):
+        self.board = self.init_board()
+        return self
 
     def place_piece(self, piece: Piece) -> bool:
-        for v in piece.get_positions():
-            if self.board[v.y][v.x]:
-                return False
-        
+        if not self.valid_place(piece):
+            return False
+
         for v in piece.get_positions():
             self.board[v.y][v.x] = Cell.Placed
 
         return True
+
+    def valid_place(self, piece: Piece) -> bool:
+        try:        
+            for v in piece.get_positions():
+                if not self.board[v.y][v.x] == None:
+                    return False
+        except IndexError:
+            return False
+
+        return True
+
 

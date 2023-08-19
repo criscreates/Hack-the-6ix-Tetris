@@ -35,9 +35,24 @@ class Tetris():
         self.score = Score(self.config)
         bag = Bag(self.config)
         hold = Hold(self.config)
-        piece = Piece(self.config, PieceType['T'])
+        piece = Piece(PieceType.T)
 
+<<<<<<< HEAD
         #print(piece.get_positions())
 
     def testPiece(self):
         piece.rotate_block(RotationDirection.CCW)
+=======
+#        for i in range(10):
+#            print(bag.pull_piece())
+
+        print(piece.get_positions_vector())
+        piece.fall(self.board)
+        print(piece.get_positions_vector())
+        self.board.place_piece(piece)
+        self.test_print_board()
+    
+    def test_print_board(self) -> list[list[int]]:
+        for row in self.board.board:
+            print(row)
+>>>>>>> 64bd3c5b1c7b1fcd3d1e218f0d862b2e6a011a3f

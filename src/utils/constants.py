@@ -18,24 +18,23 @@ POS4 = namedtuple('POS4', [
     'BODY',
 ])
 
-PieceType = {
-    'T': 'T',
-    'I': 'I',
-    'O': 'O',
-    'S': 'S',
-    'Z': 'Z',
-    'J': 'J',
-    'L': 'L',
-}
+class PieceType (IntEnum):
+    T = 1
+    I = 2
+    O = 3
+    S = 4
+    Z = 5
+    J = 6
+    L = 7
 
 PIECE_STARTS = {
-    'T': (Point(0,1) , Point(1,0) , Point(-1,0)),
-    'I': (Point(0,1) , Point(0,-1), Point(0,-2)),
-    'O': (Point(1,0) , Point(1,-1), Point(0,-1)),
-    'S': (Point(-1,0), Point(0,1) , Point(1,1)),
-    'Z': (Point(1,0) , Point(0,1) , Point(-1,1)),
-    'J': (Point(0,-1), Point(0,1) , Point(-1,-1)),
-    'L': (Point(0,-1), Point(0,1) , Point(1,-1)),
+    int(PieceType.T): (Point(0,1) , Point(1,0) , Point(-1,0)),
+    int(PieceType.I): (Point(0,1) , Point(0,-1), Point(0,-2)),
+    int(PieceType.O): (Point(1,0) , Point(1,-1), Point(0,-1)),
+    int(PieceType.S): (Point(-1,0), Point(0,1) , Point(1,1)),
+    int(PieceType.Z): (Point(1,0) , Point(0,1) , Point(-1,1)),
+    int(PieceType.J): (Point(0,-1), Point(0,1) , Point(-1,-1)),
+    int(PieceType.L): (Point(0,-1), Point(0,1) , Point(1,-1)),
 }
 
 
@@ -55,7 +54,7 @@ RotationDirection = Enum('RotationDirection', [
 
 Cell = Enum('Cell', [
     'Placed',
-    'None',
+    'Empty',
 ])
 
 RotationLookUpTable = {
