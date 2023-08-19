@@ -21,3 +21,9 @@ PIECE_STARTS = {
 }
 
 
+Direction = Enum('Direction', [
+    'UP',
+    'DOWN',
+    'LEFT',
+    'RIGHT',
+])
