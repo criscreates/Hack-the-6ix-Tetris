@@ -33,12 +33,15 @@ class Piece():
         return tuple(map(lambda x: x.xy, self.get_positions_as_tuples()))
     
     def get_rotated(self, rotation_direction: RotationDirection):
-        
-        return (
+        if self.type == PieceType.O:
+            return
+
+        self.body = (
             self.rotate_math(self.body[0],rotation_direction),
             self.rotate_math(self.body[1],rotation_direction),
             self.rotate_math(self.body[2],rotation_direction)
         )
+
 
 
     def rotate_math(self, p: Point,rotation_direction: RotationDirection) -> Point:
