@@ -13,11 +13,11 @@ from ..utils import (
 from math import sin, cos, pi
 
 class Piece():
-    def __init__(self, config: GameConfig, piece_type: PieceType, id: int, start_pos: Point = None) -> None:
+    def __init__(self, config: GameConfig, piece_type: PieceType, id: int, body: tuple[Point, Point, Point] = None, start_pos: Point = None) -> None:
         self.config = config
         self.type = piece_type
         self.origin = start_pos or self.init_origin(self.type)
-        self.body = PIECE_STARTS[piece_type]
+        self.body = body or PIECE_STARTS[piece_type]
         self.rotation = RotationState()
         self.id = id
     
@@ -52,14 +52,14 @@ class Piece():
         new_y =   p.x * bad_sin(rotation_direction)
         return Point(new_x,new_y)
     
-    def move_origin_to(self, new_pos):
-        return Piece(self.config, self.type, self.id, start_pos=new_pos)
+    def move_to(self, new_origin, new_body):
+        return Piece(self.config, self.type, self.id, body=new_body, start_pos=new_origin)
 
     def move(self, board, vector: Point) -> bool:
         tempPos = self.origin.add(vector)
-        print('Move: ', self.move_origin_to(tempPos).get_positions_vector())
+        print('Move: ', self.move_to(tempPos, self.body).get_positions_vector())
 
-        if board.valid_place(self.move_origin_to(tempPos)):
+        if board.valid_place(self.move_to(tempPos, self.body)):
             self.origin = tempPos
             return True
         else:

@@ -26,7 +26,7 @@ class Hold():
 
 
 
-held_piece = Hold()
+#held_piece = Hold()
 # put current piece into hold box
 # if the hold box is full you need to swap
 # put a condition inside the swap function
