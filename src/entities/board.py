@@ -1,4 +1,4 @@
-from piece import Piece
+from .piece import Piece
 from ..utils import GameConfig
 from ..utils.constants import *
 

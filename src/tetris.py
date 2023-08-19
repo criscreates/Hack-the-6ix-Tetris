@@ -11,6 +11,7 @@ from .entities import (
 )
 
 from .utils import GameConfig, Images, Window
+from .utils.constants import *
 
 class Tetris():
     def __init__(self):
@@ -32,6 +33,6 @@ class Tetris():
         self.background = Background(self.config)
         self.board = Board(self.config)
         self.score = Score(self.config)
-        Bag(self.config)
-        Hold(self.config)
-        Piece(self.config)
+        bag = Bag(self.config)
+        hold = Hold(self.config)
+        piece = Piece(self.config, PieceType['T'])
