@@ -1,4 +1,10 @@
 from enum import Enum
+from collections import namedtuple
+
+POS4 = namedtuple('POS4', [
+    'ORIGIN',
+    'BODY',
+])
 
 PieceType = Enum('PieceType', [
     'T',
@@ -21,9 +27,21 @@ PIECE_STARTS = {
 }
 
 
-Direction = Enum('Direction', [
+MoveDirection = Enum('MoveDirection', [
     'UP',
     'DOWN',
     'LEFT',
     'RIGHT',
+])
+
+
+RotationDirection = Enum('RotationDirection', [
+    'CW',
+    'CCW',
+])
+
+
+Cell = Enum('Cell', [
+    'Placed',
+    'None',
 ])
