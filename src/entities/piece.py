@@ -10,7 +10,7 @@ from ..utils import (
     BOARD_HEIGHT,
     BOARD_WIDTH,
 ) 
-from math import sin, cos
+from math import sin, cos, pi
 
 class Piece():
     def __init__(self, config: GameConfig, piece_type: PieceType, start_pos: Point = None) -> None:
@@ -29,20 +29,17 @@ class Piece():
     def get_rotated(self, rotation_direction: RotationDirection):
         
         return (
-            self.rotate_math(self.BODY[0],rotation_direction),
-            self.rotate_math(self.BODY[1],rotation_direction),
-            self.rotate_math(self.BODY[2],rotation_direction)
+            self.rotate_math(self.body[0],rotation_direction),
+            self.rotate_math(self.body[1],rotation_direction),
+            self.rotate_math(self.body[2],rotation_direction)
         )
 
 
-    def rotate_math(o_point: Point,rotation_direction: RotationDirection) -> Point:
-        x = o_point.x
-        y = o_point.y
-        new_x = 0
-        new_y = 0
+    def rotate_math(self, p: Point,rotation_direction: RotationDirection) -> Point:
+        bad_sin = lambda x: 1 if x==pi/2 else -1
         
-        new_x = x*cos(int(rotation_direction)) - y*sin(int(rotation_direction))
-        new_y = x*sin(int(rotation_direction)) - y*cos(int(rotation_direction))
+        new_x = - p.y * bad_sin(int(rotation_direction))
+        new_y =   p.x * bad_sin(int(rotation_direction))
         return Point(new_x,new_y)
 
     def get_positions_vector(self) -> tuple[Point, Point, Point, Point]:
