@@ -57,7 +57,6 @@ class Piece():
 
     def move(self, board, vector: Point) -> bool:
         tempPos = self.origin.add(vector)
-        print('Move: ', self.move_to(tempPos, self.body).get_positions_vector())
 
         if board.valid_place(self.move_to(tempPos, self.body)):
             self.origin = tempPos

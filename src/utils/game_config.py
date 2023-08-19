@@ -15,4 +15,12 @@ class GameConfig:
         window: Window,
         images: Images,
     ) -> None:
-        pass
+        self.screen = screen
+        self.clock = clock
+        self.fps = fps
+        self.window = window
+        self.images = images
+
+
+    def tick(self) -> None:
+        self.clock.tick(self.fps)
