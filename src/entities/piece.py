@@ -26,8 +26,10 @@ class Piece():
         rotation = self.rotation
         if (rotation_direction==RotationDirection.CCW):
              #goleft
+             pass
         elif (rotation_direction==RotationDirection.CW):
              #goright
+             pass
         print(RotationLookUpTable[self.type][rotation_direction])
         return(RotationLookUpTable[self.type][rotation_direction])
 
