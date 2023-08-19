@@ -31,16 +31,15 @@ class Tetris():
 
     def test(self):
         self.background = Background(self.config)
-        self.board = Board(self.config)
-        self.score = Score(self.config)
+        piece = Piece(self.config, PieceType.T)
         bag = Bag(self.config)
         hold = Hold(self.config)
-        piece = Piece(self.config, PieceType.T)
+        self.board = Board(self.config, piece)
+        self.score = Score(self.config)
 
-        piece.fall(self.board)
-        piece.fall(self.board)
-        print(piece.get_positions_vector())
-        self.board.place_piece(piece)
+        self.board.update()
+        print(self.board.piece.get_positions_vector())
+        self.board.place_piece()
         self.test_print_board()
     
     def test_print_board(self) -> list[list[int]]:
