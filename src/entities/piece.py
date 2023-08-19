@@ -18,7 +18,6 @@ class Piece():
         origin = self.pos4.ORIGIN
         return (origin, *map(lambda v : v.add(origin), self.pos4.BODY))
     
-<<<<<<< HEAD
 #    def get_positions_vector(self) -> None:
 #        return self.get_positions()
     
@@ -32,8 +31,6 @@ class Piece():
         print(RotationLookUpTable[self.type][rotation_direction])
         return(RotationLookUpTable[self.type][rotation_direction])
 
-
-=======
     def get_positions_vector(self) -> tuple[Point, Point, Point, Point]:
         return tuple(map(lambda x: x.xy(), self.get_positions()))
     
@@ -51,4 +48,3 @@ class Piece():
     
     def fall(self, board: list[list[int]], speed: int = 1) -> bool:
         return self.move(board, Point(0, -speed))
->>>>>>> 64bd3c5b1c7b1fcd3d1e218f0d862b2e6a011a3f

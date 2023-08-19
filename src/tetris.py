@@ -37,15 +37,6 @@ class Tetris():
         hold = Hold(self.config)
         piece = Piece(self.config, PieceType.T)
 
-<<<<<<< HEAD
-        #print(piece.get_positions())
-
-    def testPiece(self):
-        piece.rotate_block(RotationDirection.CCW)
-=======
-#        for i in range(10):
-#            print(bag.pull_piece())
-
         piece.fall(self.board)
         piece.fall(self.board)
         print(piece.get_positions_vector())
@@ -53,11 +44,5 @@ class Tetris():
         self.test_print_board()
     
     def test_print_board(self) -> list[list[int]]:
-<<<<<<< HEAD
-        for row in self.board.board:
-            print(row)
->>>>>>> 64bd3c5b1c7b1fcd3d1e218f0d862b2e6a011a3f
-=======
         for row in reversed(self.board.board):
             print(row)
->>>>>>> bc57f4eb948115c60bee6a1896993887489856a4
