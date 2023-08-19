@@ -1,8 +1,10 @@
+from ..utils import GameConfig
 from ..utils import RotationState
 from ..utils import PieceType, Point, PIECE_STARTS, POS4
 
 class Piece():
-    def __init__(self, piece_type: PieceType, pos4: POS4 = None) -> None:
+    def __init__(self, config: GameConfig, piece_type: PieceType, pos4: POS4 = None) -> None:
+        self.config = config
         self.type = piece_type
         self.pos4 = pos4 or self.init_pos4(self.type)
         self.rotation = RotationState()
@@ -21,7 +23,7 @@ class Piece():
         return tuple(map(lambda x: x.xy(), self.get_positions()))
     
     def move_to(self, pos4: POS4):
-        return Piece(self.type, pos4)
+        return Piece(self.config, self.type, pos4)
 
     def move(self, board, vector: Point) -> bool:
         tempPos = POS4(self.pos4.ORIGIN.add(vector), self.pos4.BODY)
