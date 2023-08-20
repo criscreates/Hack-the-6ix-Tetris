@@ -47,10 +47,32 @@ class Tetris():
             print(row)
     
     def test_rotation(self):
+<<<<<<< HEAD
         piece = Piece(self.config,PieceType.T, 0)
+        board = Board(self.config, piece)
+        piece.fall(board)
+        piece.fall(board)
+        piece.get_rotated(board, RotationDirection.CW)
+=======
+        piece = Piece(self.config, PieceType.T, 0)
         piece.get_rotated(RotationDirection.CW)
+>>>>>>> 1a55142be13f13624cb039a14b99306c55a4ca4e
         print(piece.get_body_as_tuples())
-        piece.get_rotated(RotationDirection.CW)
+
+        piece.get_rotated(board, RotationDirection.CCW)
         print(piece.get_body_as_tuples())
         
+    def test_hold(self):
+        h = Hold(self.config)
 
+        h.hold_piece(Piece(self.config, PieceType.I, 0))
+        print('Piece: ', h.piece.type)
+        print('Id: ', h.piece.id)
+
+        h.hold_piece(Piece(self.config, PieceType.S, 1))
+        print('Piece: ', h.piece.type)
+        print('Id: ', h.piece.id)
+
+        h.hold_piece(Piece(self.config, PieceType.T, 1))
+        print('Piece: ', h.piece.type)
+        print('Id: ', h.piece.id)
