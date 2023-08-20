@@ -91,3 +91,7 @@ class Piece():
 
     def strafe(self, board, horizontal: int) -> bool:
         return self.move(board, Point(horizontal, 0))
+
+    def quick_drop():
+        while self.fall():
+            pass
