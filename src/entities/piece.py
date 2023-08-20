@@ -1,5 +1,6 @@
 from ..utils import GameConfig
 from ..utils import RotationState
+from ..utils import DrawPlacement
 from ..utils import (
     PieceType, 
     Point, 
@@ -24,9 +25,10 @@ class Piece():
         self.body = body or PIECE_STARTS[piece_type]
         self.rotation = rotation or RotationState()
         self.id = id
+        self.prev = None
     
     def init_origin(self, piece_type: PieceType) -> Point:
-        return Point(BOARD_WIDTH//2-1, BOARD_HEIGHT-1)
+        return Point(BOARD_WIDTH//2, BOARD_HEIGHT-1)
 
     def get_positions_as_tuples(self):
         return (self.origin, *map(lambda v : v.add(self.origin), self.body))
@@ -36,6 +38,12 @@ class Piece():
 
     def get_positions_vector(self) -> tuple[Point, Point, Point, Point]:
         return tuple(map(lambda x: x.xy, self.get_positions_as_tuples()))
+
+    def fall_until_valid(self, board):
+        for _ in range(20):
+            if self.fall(board):
+                return True
+        return False
     
     def rotate(self, board, rotation_direction: RotationDirection):
         rotated = (
@@ -60,34 +68,65 @@ class Piece():
         elif rotation_direction == RotationDirection.CW:
             self.rotation.go_cw()
 
-    def point_to_real(self, p, block_size: int, board_offset: int):
-        return (p.
-                multiply(block_size).
-                multiply_y(-1).
-                add(Point(
-                    self.config.window.width//2-board_offset.x, 
-                    self.config.window.height - block_size)))
-
-    def draw(self):
+    def draw(self, placement: DrawPlacement = DrawPlacement.ON_BOARD):
         block_size = self.config.images.piece_sides.x
         board_offset = Point((BOARD_WIDTH * block_size)//2, 0)
+        board_top_right = Point(BOARD_WIDTH, BOARD_HEIGHT)
+        board_top_left = Point(0, BOARD_HEIGHT)
 
-        p2r = lambda x: self.point_to_real(x, block_size, board_offset)
+        p2r = lambda x: x.point_to_real(block_size, board_offset, self.config.window)
 
-        return self.config.screen.blits((
-        #print((
-            (self.config.images.piece_red
-            , p2r(self.origin).xy),
+        temp_prev = self.prev or []
 
-            (self.config.images.piece_red
-            , p2r(self.body[0].add(self.origin)).xy),
-            
-            (self.config.images.piece_red
-            , p2r(self.body[1].add(self.origin)).xy),
-           
-            (self.config.images.piece_red
-            , p2r(self.body[2].add(self.origin)).xy),
-        ))
+        match placement:
+            case DrawPlacement.ON_BOARD:
+                self.prev = self.config.screen.blits((
+                    (self.config.images.piece_red
+                    , p2r(self.origin).xy),
+
+                    (self.config.images.piece_red
+                    , p2r(self.body[0].add(self.origin)).xy),
+                    
+                    (self.config.images.piece_red
+                    , p2r(self.body[1].add(self.origin)).xy),
+                   
+                    (self.config.images.piece_red
+                    , p2r(self.body[2].add(self.origin)).xy),
+                ))
+
+            case DrawPlacement.PREVIEW:
+                preview_top_right = board_top_right.add(Point(3, 0))
+                self.prev = self.config.screen.blits((
+                    (self.config.images.piece_red
+                    , p2r(preview_top_right.add(Point(2,-2))).xy),
+
+                    (self.config.images.piece_red
+                    , p2r(self.body[0].add(preview_top_right).add(Point(2,-2))).xy),
+                    
+                    (self.config.images.piece_red
+                    , p2r(self.body[1].add(preview_top_right).add(Point(2,-2))).xy),
+                   
+                    (self.config.images.piece_red
+                    , p2r(self.body[2].add(preview_top_right).add(Point(2,-2))).xy),
+                ))
+
+            case DrawPlacement.HOLD:
+                hold_top_left = board_top_left.add(Point(3, 0))
+                self.prev = self.config.screen.blits((
+                    (self.config.images.piece_red
+                    , p2r(hold_top_left.add(Point(-9,-2))).xy),
+
+                    (self.config.images.piece_red
+                    , p2r(self.body[0].add(hold_top_left).add(Point(-9,-2))).xy),
+                    
+                    (self.config.images.piece_red
+                    , p2r(self.body[1].add(hold_top_left).add(Point(-9,-2))).xy),
+                   
+                    (self.config.images.piece_red
+                    , p2r(self.body[2].add(hold_top_left).add(Point(-9,-2))).xy),
+                ))
+
+        return [*temp_prev, *self.prev]
 
 
     def rotate_math(self, p: Point,rotation_direction: RotationDirection) -> Point:
@@ -117,6 +156,8 @@ class Piece():
     def strafe(self, board, horizontal: int) -> bool:
         return self.move(board, Point(horizontal, 0))
 
-    def quick_drop(self):
-        while self.fall():
-            pass
+    def quick_drop(self, board):
+        for _ in range(20):
+            if not self.fall(board):
+                return True
+        return False

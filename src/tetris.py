@@ -18,7 +18,8 @@ class Tetris():
         pygame.init()
         pygame.display.set_caption("Tetris")
 
-        window = Window(1000, 1000)
+        window = Window(1280, 720)
+
         screen = pygame.display.set_mode((window.width, window.height))
         images = Images()
 
@@ -30,31 +31,68 @@ class Tetris():
             images = images,
         )
 
-        self.bag = Bag(self.config)
 
     def play(self):
-        board = Board(self.config, Piece(self.config, PieceType.T, 0))
-
+        bag = Bag(self.config)
+        board = Board(self.config, bag.pull_piece(), bag)
         score = Score(self.config)
+        
+        self.config.screen.fill((255, 255, 255))
+        
 
         while True:
+            # Events
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit()
-            
-            keys = pygame.key.get_pressed()
 
+            # Inputs
+            keys = pygame.key.get_pressed()
+            ticks = pygame.time.get_ticks()            
+
+            # Input Handles
             if (keys[pygame.K_q]):
                 exit()
             
-            board.update(keys)
-        
-            self.config.screen.fill((255, 255, 255))
-            board.piece.draw()
+            board_update_results = board.update(keys, ticks)
 
-            pygame.display.update(score.draw())
-            self.config.tick()
+            if board_update_results == None:
+                self.lose(score.score)
+                break
+            else:
+                score.add(board_update_results)
         
+            # Draws
+            self.config.screen.fill((255, 255, 255))
+            board_rects = board.draw()
+            if board_rects == None:
+                self.lose()
+            score_rects = score.draw()
+            caption_rects = self.draw_captions()
+
+            # Displays
+            pygame.display.update(score_rects + board_rects + caption_rects)
+            self.config.tick()
+
+    def draw_captions(self):
+        block_size = self.config.images.piece_sides.x
+        board_offset = Point((BOARD_WIDTH * block_size)//2, 0)
+        board_top_right = Point(BOARD_WIDTH, BOARD_HEIGHT)
+        board_top_left = Point(0, BOARD_HEIGHT)
+        hold_top_left = board_top_left.add(Point(3, 0)).add(Point(-9, 2.5))
+        preview_top_right = board_top_right.add(Point(3, 0)).add(Point(2, 2.5))
+
+        p2r = lambda x: x.point_to_real(block_size, board_offset, self.config.window)
+
+        font = pygame.font.SysFont("Arial",50)
+        hold_rect = self.config.screen.blit(font.render('Hold', True, (0,0,0)), p2r(hold_top_left).xy)
+        next_rect = self.config.screen.blit(font.render('Next', True, (0,0,0)), p2r(preview_top_right).xy)
+        
+        return [hold_rect, next_rect]
+
+
+    def lose(self, score):
+        print(f'Game Over: You got a score of : {score} points')
 
     def test(self):
         self.background = Background(self.config)
