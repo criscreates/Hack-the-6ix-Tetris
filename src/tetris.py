@@ -18,7 +18,7 @@ class Tetris():
         pygame.init()
         pygame.display.set_caption("Tetris")
 
-        window = Window(1920, 1080)
+        window = Window(1000, 1000)
         screen = pygame.display.set_mode((window.width, window.height))
         images = Images()
 
