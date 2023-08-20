@@ -111,19 +111,19 @@ class Piece():
                 ))
 
             case DrawPlacement.HOLD:
-                preview_top_left = board_top_left.add(Point(3, 0))
+                hold_top_left = board_top_left.add(Point(3, 0))
                 self.prev = self.config.screen.blits((
                     (self.config.images.piece_red
-                    , p2r(preview_top_left.add(Point(-9,-2))).xy),
+                    , p2r(hold_top_left.add(Point(-9,-2))).xy),
 
                     (self.config.images.piece_red
-                    , p2r(self.body[0].add(preview_top_left).add(Point(-9,-2))).xy),
+                    , p2r(self.body[0].add(hold_top_left).add(Point(-9,-2))).xy),
                     
                     (self.config.images.piece_red
-                    , p2r(self.body[1].add(preview_top_left).add(Point(-9,-2))).xy),
+                    , p2r(self.body[1].add(hold_top_left).add(Point(-9,-2))).xy),
                    
                     (self.config.images.piece_red
-                    , p2r(self.body[2].add(preview_top_left).add(Point(-9,-2))).xy),
+                    , p2r(self.body[2].add(hold_top_left).add(Point(-9,-2))).xy),
                 ))
 
         return [*temp_prev, *self.prev]

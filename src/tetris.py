@@ -19,6 +19,7 @@ class Tetris():
         pygame.display.set_caption("Tetris")
 
         window = Window(1280, 720)
+
         screen = pygame.display.set_mode((window.width, window.height))
         images = Images()
 
@@ -28,6 +29,8 @@ class Tetris():
             fps = 60,
             window = window,
             images = images,
+            font_type = 'consolas',
+            font_size = 45,
         )
 
 
@@ -37,7 +40,7 @@ class Tetris():
         score = Score(self.config)
         
         self.config.screen.fill((255, 255, 255))
-        pygame.display.flip()
+        
 
         while True:
             # Events
@@ -67,11 +70,29 @@ class Tetris():
             if board_rects == None:
                 self.lose()
             score_rects = score.draw()
+            caption_rects = self.draw_captions()
 
             # Displays
-            pygame.display.update(score_rects + board_rects)
+            pygame.display.update(score_rects + board_rects + caption_rects)
             self.config.tick()
+
+    def draw_captions(self):
+        block_size = self.config.images.piece_sides.x
+        board_offset = Point((BOARD_WIDTH * block_size)//2, 0)
+        board_top_right = Point(BOARD_WIDTH, BOARD_HEIGHT)
+        board_top_left = Point(0, BOARD_HEIGHT)
+        hold_top_left = board_top_left.add(Point(3, 0)).add(Point(-9, 2.5))
+        preview_top_right = board_top_right.add(Point(3, 0)).add(Point(2, 2.5))
+
+        p2r = lambda x: x.point_to_real(block_size, board_offset, self.config.window)
+
+        font = pygame.font.SysFont(self.config.font_type, self.config.font_size)
+        hold_rect = self.config.screen.blit(font.render('Hold', True, (0,0,0)), p2r(hold_top_left).xy)
+        next_rect = self.config.screen.blit(font.render('Next', True, (0,0,0)), p2r(preview_top_right).xy)
         
+        return [hold_rect, next_rect]
+
+
     def lose(self, score):
         print(f'Game Over: You got a score of : {score} points')
 

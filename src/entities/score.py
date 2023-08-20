@@ -12,8 +12,9 @@ class Score():
         self.score += clear_count*100
 
     def draw(self, x = 0, y = 0):
-        font = pygame.font.SysFont("Arial",50)
+
+        font = pygame.font.SysFont(self.config.font_type, self.config.font_size)
         self.previous_rect = self.current_rect
-        current_surface = font.render(str(self.score), True, (0,0,0))
+        current_surface = font.render('Score: ' + str(self.score), True, (0,0,0))
         self.current_rect = self.config.screen.blit(current_surface,(x,y))
         return [self.previous_rect, self.current_rect]
