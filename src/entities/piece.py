@@ -13,12 +13,20 @@ from ..utils import (
 from math import sin, cos, pi
 
 class Piece():
-    def __init__(self, config: GameConfig, piece_type: PieceType, start_pos: Point = None) -> None:
+    def __init__(self, 
+                 config: GameConfig, 
+                 piece_type: PieceType, 
+                 id: int, 
+                 body: tuple[Point, Point, Point] = None,
+                 rotation: RotationState = None, 
+                 start_pos: Point = None,
+                 ) -> None:
         self.config = config
         self.type = piece_type
         self.origin = start_pos or self.init_origin(self.type)
-        self.body = PIECE_STARTS[piece_type]
-        self.rotation = RotationState()
+        self.body = body or PIECE_STARTS[piece_type]
+        self.rotation = rotation or RotationState()
+        self.id = id
     
     def init_origin(self, piece_type: PieceType) -> Point:
         return Point(BOARD_WIDTH//2-1, BOARD_HEIGHT-1)
@@ -32,8 +40,16 @@ class Piece():
     def get_positions_vector(self) -> tuple[Point, Point, Point, Point]:
         return tuple(map(lambda x: x.xy, self.get_positions_as_tuples()))
     
-    def get_rotated(self, rotation_direction: RotationDirection):
+    def get_rotated(self, board, rotation_direction: RotationDirection):
         if self.type == PieceType.O:
+            return
+        if not board.valid_place(
+            self.move_to(
+                self.origin,
+                    (self.rotate_math(self.body[0],rotation_direction),
+                    self.rotate_math(self.body[1],rotation_direction),
+                    self.rotate_math(self.body[2],rotation_direction)),
+                self.rotation)):
             return
 
         self.body = (
@@ -41,6 +57,11 @@ class Piece():
             self.rotate_math(self.body[1],rotation_direction),
             self.rotate_math(self.body[2],rotation_direction)
         )
+
+        if rotation_direction == RotationDirection.CCW:
+            self.rotation.go_ccw()
+        elif rotation_direction == RotationDirection.CW:
+            self.rotation.go_cw()
 
 
 
@@ -50,15 +71,17 @@ class Piece():
         new_x = - p.y * bad_sin(rotation_direction)
         new_y =   p.x * bad_sin(rotation_direction)
         return Point(new_x,new_y)
-    
-    def rotate_fake():
-        return Piece(self.config, self.type, )
+
+        
+    def move_to(self, new_origin, new_body, new_rotation):
+        return Piece(self.config, self.type, self.id, body=new_body, rotation=new_rotation, start_pos=new_origin)
+
 
     def move(self, board, vector: Point) -> bool:
         tempPos = self.origin.add(vector)
-        print('Move: ', self.move_origin_to(tempPos).get_positions_vector())
+        print('Move: ', self.move_to(tempPos, self.body, self.rotation).get_positions_vector())
 
-        if board.valid_place(self.move_origin_to(tempPos)):
+        if board.valid_place(self.move_to(tempPos, self.body, self.rotation)):
             self.origin = tempPos
             return True
         else:
