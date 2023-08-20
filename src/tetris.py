@@ -32,18 +32,18 @@ class Tetris():
         self.bag = Bag(self.config)
 
     def play(self):
-        board = Board(self.config, self.bag.pull_piece)
+        board = Board(self.config, self.bag.pull_piece())
 
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit()
             
-            board.update(pygame.key.get_pressed())
+            #board.update(pygame.key.get_pressed())
         
             self.config.screen.fill((255, 255, 255))
 
-            self.config.screen.blit(self.config.images.piece_red, self.config.images.piece_rect.move(10,10))
+            board.piece.draw()
 
             pygame.display.flip()
         
