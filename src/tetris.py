@@ -66,10 +66,10 @@ class Tetris():
 
         piece.fall(board)
         piece.fall(board)
-        piece.get_rotated(board, RotationDirection.CW)
+        piece.rotate(board, RotationDirection.CW)
         print(piece.get_body_as_tuples())
 
-        piece.get_rotated(board, RotationDirection.CCW)
+        piece.rotate(board, RotationDirection.CCW)
         print(piece.get_body_as_tuples())
         
     def test_hold(self):
