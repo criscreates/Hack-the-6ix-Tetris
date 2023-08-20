@@ -29,6 +29,20 @@ class Tetris():
             images = images,
         )
 
+        self.bag = Bag(self.config)
+
+    def play(self):
+        board = Board(self.config, self.bag.pull_piece)
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    exit()
+            
+            board.update(pygame.key.get_pressed())
+        
+        
+
     def test(self):
         self.background = Background(self.config)
         piece = Piece(self.config, PieceType.T, 0)
@@ -37,7 +51,7 @@ class Tetris():
         self.board = Board(self.config, piece)
         self.score = Score(self.config)
 
-        self.board.update()
+        self.board.piece.fall(self.board)
         print('After Updates: ', self.board.piece.get_positions_vector())
         self.board.place_piece()
         self.test_print_board()
@@ -47,16 +61,12 @@ class Tetris():
             print(row)
     
     def test_rotation(self):
-<<<<<<< HEAD
         piece = Piece(self.config,PieceType.T, 0)
         board = Board(self.config, piece)
+
         piece.fall(board)
         piece.fall(board)
         piece.get_rotated(board, RotationDirection.CW)
-=======
-        piece = Piece(self.config, PieceType.T, 0)
-        piece.get_rotated(RotationDirection.CW)
->>>>>>> 1a55142be13f13624cb039a14b99306c55a4ca4e
         print(piece.get_body_as_tuples())
 
         piece.get_rotated(board, RotationDirection.CCW)
