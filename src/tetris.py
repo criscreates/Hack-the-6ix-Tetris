@@ -29,6 +29,8 @@ class Tetris():
             fps = 60,
             window = window,
             images = images,
+            font_type = 'consolas',
+            font_size = 45,
         )
 
 
@@ -84,7 +86,7 @@ class Tetris():
 
         p2r = lambda x: x.point_to_real(block_size, board_offset, self.config.window)
 
-        font = pygame.font.SysFont("Arial",50)
+        font = pygame.font.SysFont(self.config.font_type, self.config.font_size)
         hold_rect = self.config.screen.blit(font.render('Hold', True, (0,0,0)), p2r(hold_top_left).xy)
         next_rect = self.config.screen.blit(font.render('Next', True, (0,0,0)), p2r(preview_top_right).xy)
         

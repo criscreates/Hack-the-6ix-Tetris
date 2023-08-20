@@ -14,12 +14,16 @@ class GameConfig:
         fps: int,
         window: Window,
         images: Images,
+        font_type: str,
+        font_size: int,
     ) -> None:
         self.screen = screen
         self.clock = clock
         self.fps = fps
         self.window = window
         self.images = images
+        self.font_type = font_type
+        self.font_size = font_size
 
 
     def tick(self) -> None:
