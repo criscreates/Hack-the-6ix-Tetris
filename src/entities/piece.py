@@ -40,23 +40,23 @@ class Piece():
     def get_positions_vector(self) -> tuple[Point, Point, Point, Point]:
         return tuple(map(lambda x: x.xy, self.get_positions_as_tuples()))
     
-    def get_rotated(self, board, rotation_direction: RotationDirection):
+    def rotate(self, board, rotation_direction: RotationDirection):
+        rotated = (
+            self.rotate_math(self.body[0],rotation_direction),
+            self.rotate_math(self.body[1],rotation_direction),
+            self.rotate_math(self.body[2],rotation_direction)
+        ) 
+
         if self.type == PieceType.O:
             return
         if not board.valid_place(
             self.move_to(
                 self.origin,
-                    (self.rotate_math(self.body[0],rotation_direction),
-                    self.rotate_math(self.body[1],rotation_direction),
-                    self.rotate_math(self.body[2],rotation_direction)),
+                rotated,
                 self.rotation)):
             return
 
-        self.body = (
-            self.rotate_math(self.body[0],rotation_direction),
-            self.rotate_math(self.body[1],rotation_direction),
-            self.rotate_math(self.body[2],rotation_direction)
-        )
+        self.body = rotated
 
         if rotation_direction == RotationDirection.CCW:
             self.rotation.go_ccw()

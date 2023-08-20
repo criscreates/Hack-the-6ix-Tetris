@@ -41,6 +41,11 @@ class Tetris():
             
             board.update(pygame.key.get_pressed())
         
+            self.config.screen.fill((255, 255, 255))
+
+            self.config.screen.blit(self.config.images.piece_red, self.config.images.piece_rect.move(10,10))
+
+            pygame.display.flip()
         
 
     def test(self):
@@ -66,10 +71,10 @@ class Tetris():
 
         piece.fall(board)
         piece.fall(board)
-        piece.get_rotated(board, RotationDirection.CW)
+        piece.rotate(board, RotationDirection.CW)
         print(piece.get_body_as_tuples())
 
-        piece.get_rotated(board, RotationDirection.CCW)
+        piece.rotate(board, RotationDirection.CCW)
         print(piece.get_body_as_tuples())
         
     def test_hold(self):
