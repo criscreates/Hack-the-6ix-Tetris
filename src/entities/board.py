@@ -1,3 +1,4 @@
+import pygame
 from .piece import Piece
 from ..utils import GameConfig
 from ..utils import Cell
@@ -12,10 +13,15 @@ class Board():
         self.piece = piece
         self.clear_count = 0
     
-    def update(self):
-        for _ in range(23):
+    def update(self, keys):
+        if keys[pygame.K_DOWN]:
             self.piece.fall(self)
-        for _ in range(7):
+
+        if keys[pygame.K_LEFT] and keys[pygame.K_RIGHT]:
+            self.piece.strafe(self, 0)
+        elif keys[pygame.K_LEFT]:
+            self.piece.strafe(self, -1)
+        elif keys[pygame.K_RIGHT]:
             self.piece.strafe(self, 1)
 
     def init_board(self) -> list[list[Cell]]:
