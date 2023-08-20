@@ -17,8 +17,9 @@ class Tetris():
     def __init__(self):
         pygame.init()
         pygame.display.set_caption("Tetris")
-        window = Window(700, 700)
-        screen = pygame.display.set_mode((window.width, window.height), pygame.FULLSCREEN)
+
+        window = Window(1920, 1080)
+        screen = pygame.display.set_mode((window.width, window.height))
         images = Images()
 
         self.config = GameConfig(
@@ -33,6 +34,7 @@ class Tetris():
 
     def play(self):
         board = Board(self.config, Piece(self.config, PieceType.T, 0))
+
         score = Score(self.config)
 
         while True:

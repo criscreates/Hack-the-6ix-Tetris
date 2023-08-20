@@ -60,28 +60,33 @@ class Piece():
         elif rotation_direction == RotationDirection.CW:
             self.rotation.go_cw()
 
+    def point_to_real(self, p, block_size: int, board_offset: int):
+        return (p.
+                multiply(block_size).
+                multiply_y(-1).
+                add(Point(
+                    self.config.window.width//2-board_offset.x, 
+                    self.config.window.height - block_size)))
 
     def draw(self):
         block_size = self.config.images.piece_sides.x
         board_offset = Point((BOARD_WIDTH * block_size)//2, 0)
 
-        def point_to_real(x):
-            return x.multiply(block_size).multiply_y(-1).add(Point(self.config.window.width//2-board_offset.x, self.config.window.height - block_size))
-
+        p2r = lambda x: self.point_to_real(x, block_size, board_offset)
 
         return self.config.screen.blits((
         #print((
             (self.config.images.piece_red
-            , point_to_real(self.origin).xy),
+            , p2r(self.origin).xy),
 
             (self.config.images.piece_red
-            , point_to_real(self.body[0].add(self.origin)).xy),
+            , p2r(self.body[0].add(self.origin)).xy),
             
             (self.config.images.piece_red
-            , point_to_real(self.body[1].add(self.origin)).xy),
+            , p2r(self.body[1].add(self.origin)).xy),
            
             (self.config.images.piece_red
-            , point_to_real(self.body[2].add(self.origin)).xy),
+            , p2r(self.body[2].add(self.origin)).xy),
         ))
 
 
