@@ -41,6 +41,11 @@ class Tetris():
             
             board.update(pygame.key.get_pressed())
         
+            self.config.screen.fill((255, 255, 255))
+
+            self.config.screen.blit(self.config.images.piece_red, self.config.images.piece_rect.move(10,10))
+
+            pygame.display.flip()
         
 
     def test(self):
