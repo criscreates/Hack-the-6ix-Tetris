@@ -64,8 +64,13 @@ class Board():
                 self.rotate_s_time = ticks
         
         # Falls
-        if keys[pygame.K_DOWN] and ticks - self.fall_s_time > 200:
+        if keys[pygame.K_SPACE] and ticks - self.fall_s_time > 150:
             self.piece.quick_drop(self)
+            if not self.piece.fall(self):
+                self.place_piece()
+            self.fall_s_time = ticks
+        elif keys[pygame.K_DOWN] and ticks - self.fall_s_time > 100:
+            self.piece.soft_drop(self)
             if not self.piece.fall(self):
                 self.place_piece()
             self.fall_s_time = ticks

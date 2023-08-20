@@ -161,3 +161,10 @@ class Piece():
             if not self.fall(board):
                 return True
         return False
+
+
+    def soft_drop(self, board):
+        for _ in range(2):
+            if not self.fall(board):
+                return True
+        return False
