@@ -4,13 +4,10 @@ from ..utils import (
     PieceType, 
     Point, 
     PIECE_STARTS, 
-    POS4, 
-    RotationLookUpTable, 
     RotationDirection,
     BOARD_HEIGHT,
     BOARD_WIDTH,
 ) 
-from math import sin, cos, pi
 
 class Piece():
     def __init__(self, 
@@ -64,6 +61,21 @@ class Piece():
             self.rotation.go_cw()
 
 
+    def draw(self):
+        return self.config.screen.blits((
+            (self.config.images.piece_red
+            , self.origin.xy),
+
+            (self.config.images.piece_red
+            , self.body[0].multiply(self.config.images.piece_sides.x).add(self.origin).xy),
+
+            (self.config.images.piece_red
+            , self.body[1].multiply(self.config.images.piece_sides.x).add(self.origin).xy),
+
+            (self.config.images.piece_red
+            , self.body[2].multiply(self.config.images.piece_sides.x).add(self.origin).xy),
+        ))
+
 
     def rotate_math(self, p: Point,rotation_direction: RotationDirection) -> Point:
         bad_sin = lambda x: 1 if x==rotation_direction.CW else -1
@@ -92,6 +104,6 @@ class Piece():
     def strafe(self, board, horizontal: int) -> bool:
         return self.move(board, Point(horizontal, 0))
 
-    def quick_drop():
+    def quick_drop(self):
         while self.fall():
             pass

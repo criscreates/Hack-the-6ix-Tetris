@@ -1,5 +1,4 @@
 from ..utils import GameConfig
-from ..utils import ScoreAmount
 import pygame
 
 class Score():

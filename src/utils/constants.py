@@ -8,8 +8,11 @@ class Point():
         self.y = y
         self.xy = (x,y)
     
-    def add(self, v: tuple[int,int]) -> tuple[int,int]:
+    def add(self, v: tuple[int,int]):
         return Point(v.x + self.x, v.y + self.y) 
+    
+    def multiply(self, s: int):
+        return Point(self.x * s, self.y * s)
 
 
 POS4 = namedtuple('POS4', [

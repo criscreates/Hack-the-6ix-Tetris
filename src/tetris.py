@@ -17,8 +17,8 @@ class Tetris():
     def __init__(self):
         pygame.init()
         pygame.display.set_caption("Tetris")
-        window = Window(288, 512)
-        screen = pygame.display.set_mode((window.width, window.height))
+        window = Window(1920, 1080)
+        screen = pygame.display.set_mode((window.width, window.height), pygame.FULLSCREEN)
         images = Images()
 
         self.config = GameConfig(
@@ -32,18 +32,22 @@ class Tetris():
         self.bag = Bag(self.config)
 
     def play(self):
-        board = Board(self.config, self.bag.pull_piece)
+        board = Board(self.config, self.bag.pull_piece())
 
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit()
             
-            board.update(pygame.key.get_pressed())
+            keys = pygame.key.get_pressed()
+            if (keys[pygame.K_q]):
+                exit()
+            
+            board.update(keys)
         
             self.config.screen.fill((255, 255, 255))
 
-            self.config.screen.blit(self.config.images.piece_red, self.config.images.piece_rect.move(10,10))
+            board.piece.draw()
 
             pygame.display.flip()
         

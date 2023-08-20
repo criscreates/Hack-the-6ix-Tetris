@@ -10,7 +10,15 @@ class Bag():
         self.spot = 0
 
     def init_bag(self):
-        return ['T', 'I', 'O', 'S', 'Z', 'J', 'L']
+        return [
+            PieceType.T,
+            PieceType.I,
+            PieceType.O,
+            PieceType.S,
+            PieceType.Z,
+            PieceType.J,
+            PieceType.L,
+        ]
 
 
     def refill_bag(self):
