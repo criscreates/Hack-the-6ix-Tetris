@@ -75,6 +75,12 @@ Cell = Enum('Cell', [
     'Empty',
 ])
 
+DrawPlacement = Enum('DrawPlacement', [
+    'ON_BOARD',
+    'PREVIEW',
+    'HOLD',
+])
+
 RotationLookUpTable = {
     int(PieceType.T): (
         ((0,1),(1,0),(-1,0)),

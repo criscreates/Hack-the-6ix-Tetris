@@ -18,8 +18,8 @@ class Tetris():
         pygame.init()
         pygame.display.set_caption("Tetris")
 
-        window = Window(1920, 1080)
-        screen = pygame.display.set_mode((window.width, window.height), pygame.FULLSCREEN)
+        window = Window(1280, 720)
+        screen = pygame.display.set_mode((window.width, window.height))
         images = Images()
 
         self.config = GameConfig(
@@ -33,8 +33,7 @@ class Tetris():
 
     def play(self):
         bag = Bag(self.config)
-        board = Board(self.config, Piece(self.config, PieceType.J, 0))
-
+        board = Board(self.config, bag.pull_piece(), bag)
         score = Score(self.config)
         
         self.config.screen.fill((255, 255, 255))
@@ -45,25 +44,36 @@ class Tetris():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit()
-            
+
             # Inputs
             keys = pygame.key.get_pressed()
+            ticks = pygame.time.get_ticks()            
 
             # Input Handles
             if (keys[pygame.K_q]):
                 exit()
             
-            board.update(keys)
+            board_update_results = board.update(keys, ticks)
+
+            if board_update_results == None:
+                self.lose(score.score)
+                break
+            else:
+                score.add(board_update_results)
         
             # Draws
             self.config.screen.fill((255, 255, 255))
             board_rects = board.draw()
+            if board_rects == None:
+                self.lose()
             score_rects = score.draw()
 
             # Displays
             pygame.display.update(score_rects + board_rects)
             self.config.tick()
         
+    def lose(self, score):
+        print(f'Game Over: You got a score of : {score} points')
 
     def test(self):
         self.background = Background(self.config)

@@ -1,5 +1,6 @@
 from ..utils import GameConfig
 from ..utils import RotationState
+from ..utils import DrawPlacement
 from ..utils import (
     PieceType, 
     Point, 
@@ -39,8 +40,10 @@ class Piece():
         return tuple(map(lambda x: x.xy, self.get_positions_as_tuples()))
 
     def fall_until_valid(self, board):
-        while not self.fall(board):
-            pass
+        for _ in range(20):
+            if self.fall(board):
+                return True
+        return False
     
     def rotate(self, board, rotation_direction: RotationDirection):
         rotated = (
@@ -65,28 +68,63 @@ class Piece():
         elif rotation_direction == RotationDirection.CW:
             self.rotation.go_cw()
 
-    def draw(self):
+    def draw(self, placement: DrawPlacement = DrawPlacement.ON_BOARD):
         block_size = self.config.images.piece_sides.x
         board_offset = Point((BOARD_WIDTH * block_size)//2, 0)
+        board_top_right = Point(BOARD_WIDTH, BOARD_HEIGHT)
+        board_top_left = Point(0, BOARD_HEIGHT)
 
         p2r = lambda x: x.point_to_real(block_size, board_offset, self.config.window)
 
         temp_prev = self.prev or []
 
-        self.prev = self.config.screen.blits((
-        #print((
-            (self.config.images.piece_red
-            , p2r(self.origin).xy),
+        match placement:
+            case DrawPlacement.ON_BOARD:
+                self.prev = self.config.screen.blits((
+                    (self.config.images.piece_red
+                    , p2r(self.origin).xy),
 
-            (self.config.images.piece_red
-            , p2r(self.body[0].add(self.origin)).xy),
-            
-            (self.config.images.piece_red
-            , p2r(self.body[1].add(self.origin)).xy),
-           
-            (self.config.images.piece_red
-            , p2r(self.body[2].add(self.origin)).xy),
-        ))
+                    (self.config.images.piece_red
+                    , p2r(self.body[0].add(self.origin)).xy),
+                    
+                    (self.config.images.piece_red
+                    , p2r(self.body[1].add(self.origin)).xy),
+                   
+                    (self.config.images.piece_red
+                    , p2r(self.body[2].add(self.origin)).xy),
+                ))
+
+            case DrawPlacement.PREVIEW:
+                preview_top_right = board_top_right.add(Point(3, 0))
+                self.prev = self.config.screen.blits((
+                    (self.config.images.piece_red
+                    , p2r(preview_top_right.add(Point(2,-2))).xy),
+
+                    (self.config.images.piece_red
+                    , p2r(self.body[0].add(preview_top_right).add(Point(2,-2))).xy),
+                    
+                    (self.config.images.piece_red
+                    , p2r(self.body[1].add(preview_top_right).add(Point(2,-2))).xy),
+                   
+                    (self.config.images.piece_red
+                    , p2r(self.body[2].add(preview_top_right).add(Point(2,-2))).xy),
+                ))
+
+            case DrawPlacement.HOLD:
+                preview_top_left = board_top_left.add(Point(3, 0))
+                self.prev = self.config.screen.blits((
+                    (self.config.images.piece_red
+                    , p2r(preview_top_left.add(Point(-9,-2))).xy),
+
+                    (self.config.images.piece_red
+                    , p2r(self.body[0].add(preview_top_left).add(Point(-9,-2))).xy),
+                    
+                    (self.config.images.piece_red
+                    , p2r(self.body[1].add(preview_top_left).add(Point(-9,-2))).xy),
+                   
+                    (self.config.images.piece_red
+                    , p2r(self.body[2].add(preview_top_left).add(Point(-9,-2))).xy),
+                ))
 
         return [*temp_prev, *self.prev]
 
@@ -119,5 +157,7 @@ class Piece():
         return self.move(board, Point(horizontal, 0))
 
     def quick_drop(self, board):
-        while self.fall(board):
-            pass
+        for _ in range(20):
+            if not self.fall(board):
+                return True
+        return False

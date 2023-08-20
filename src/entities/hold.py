@@ -1,6 +1,6 @@
 from ..utils import GameConfig
-from ..utils.constants import PieceType
-from ..entities.bag import Bag
+from ..utils import PieceType, DrawPlacement
+from ..entities import Bag
 import random
 
 class Hold():
@@ -8,17 +8,22 @@ class Hold():
         self.piece = None
 
     def hold_piece(self, current_piece):
-        if self.piece:
-            if self.piece.id > current_piece.id:
+        if self.piece != None:
+            if self.piece.id > current_piece.id - 1:
                 return current_piece
             else:
                 temp_piece = self.piece
                 self.piece = current_piece
-                current_piece = temp_piece
-                return current_piece
+                return temp_piece
         else:
             self.piece = current_piece
             return None
+
+    def draw(self):
+        if self.piece != None:
+            return self.piece.draw(DrawPlacement.HOLD)
+        else:
+            return []
 
 
 
