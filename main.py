@@ -8,3 +8,6 @@ if __name__ == "__main__":
     
     print('\n\nRotation')
     g.test_rotation()
+
+    print('\n\nHold')
+    g.test_hold()
