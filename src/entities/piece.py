@@ -24,9 +24,10 @@ class Piece():
         self.body = body or PIECE_STARTS[piece_type]
         self.rotation = rotation or RotationState()
         self.id = id
+        self.prev = None
     
     def init_origin(self, piece_type: PieceType) -> Point:
-        return Point(BOARD_WIDTH//2-1, BOARD_HEIGHT-1)
+        return Point(BOARD_WIDTH//2, BOARD_HEIGHT-1)
 
     def get_positions_as_tuples(self):
         return (self.origin, *map(lambda v : v.add(self.origin), self.body))
@@ -36,6 +37,10 @@ class Piece():
 
     def get_positions_vector(self) -> tuple[Point, Point, Point, Point]:
         return tuple(map(lambda x: x.xy, self.get_positions_as_tuples()))
+
+    def fall_until_valid(self, board):
+        while not self.fall(board):
+            pass
     
     def rotate(self, board, rotation_direction: RotationDirection):
         rotated = (
@@ -60,21 +65,15 @@ class Piece():
         elif rotation_direction == RotationDirection.CW:
             self.rotation.go_cw()
 
-    def point_to_real(self, p, block_size: int, board_offset: int):
-        return (p.
-                multiply(block_size).
-                multiply_y(-1).
-                add(Point(
-                    self.config.window.width//2-board_offset.x, 
-                    self.config.window.height - block_size)))
-
     def draw(self):
         block_size = self.config.images.piece_sides.x
         board_offset = Point((BOARD_WIDTH * block_size)//2, 0)
 
-        p2r = lambda x: self.point_to_real(x, block_size, board_offset)
+        p2r = lambda x: x.point_to_real(block_size, board_offset, self.config.window)
 
-        return self.config.screen.blits((
+        temp_prev = self.prev or []
+
+        self.prev = self.config.screen.blits((
         #print((
             (self.config.images.piece_red
             , p2r(self.origin).xy),
@@ -88,6 +87,8 @@ class Piece():
             (self.config.images.piece_red
             , p2r(self.body[2].add(self.origin)).xy),
         ))
+
+        return [*temp_prev, *self.prev]
 
 
     def rotate_math(self, p: Point,rotation_direction: RotationDirection) -> Point:
@@ -117,6 +118,6 @@ class Piece():
     def strafe(self, board, horizontal: int) -> bool:
         return self.move(board, Point(horizontal, 0))
 
-    def quick_drop(self):
-        while self.fall():
+    def quick_drop(self, board):
+        while self.fall(board):
             pass

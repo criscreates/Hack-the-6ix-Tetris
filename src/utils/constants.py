@@ -1,6 +1,5 @@
 from enum import Enum, IntEnum
 from collections import namedtuple
-from math import pi
 
 class Point():
     def __init__(self, x: int, y: int) -> None:
@@ -19,6 +18,15 @@ class Point():
     
     def multiply_x(self, s:int):
         return Point(self.x * s, self.y)
+
+    def point_to_real(self, block_size: int, board_offset: int, window):
+        return (self.
+                multiply(block_size).
+                multiply_y(-1).
+                add(Point(
+                    window.width//2-board_offset.x, 
+                    window.height - block_size)))
+
 
 
 POS4 = namedtuple('POS4', [
