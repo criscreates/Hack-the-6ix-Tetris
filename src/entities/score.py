@@ -1,5 +1,4 @@
 from ..utils import GameConfig
-from ..utils import ScoreAmount
 
 class Score():
     def __init__(self, config: GameConfig) -> None:

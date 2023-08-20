@@ -63,10 +63,17 @@ class Piece():
 
     def draw(self):
         return self.config.screen.blits((
-            (self.config.images.piece_red, self.origin),
-            (self.config.images.piece_red, self.body[0].add(self.origin)),
-            (self.config.images.piece_red, self.body[1].add(self.origin)),
-            (self.config.images.piece_red, self.body[2].add(self.origin)),
+            (self.config.images.piece_red
+            , self.origin.xy),
+
+            (self.config.images.piece_red
+            , self.body[0].multiply(self.config.images.piece_sides.x).add(self.origin).xy),
+
+            (self.config.images.piece_red
+            , self.body[1].multiply(self.config.images.piece_sides.x).add(self.origin).xy),
+
+            (self.config.images.piece_red
+            , self.body[2].multiply(self.config.images.piece_sides.x).add(self.origin).xy),
         ))
 
 
