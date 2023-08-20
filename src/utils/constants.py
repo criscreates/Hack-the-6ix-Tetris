@@ -13,6 +13,12 @@ class Point():
     
     def multiply(self, s: int):
         return Point(self.x * s, self.y * s)
+    
+    def multiply_y(self, s:int):
+        return Point(self.x, self.y * s)
+    
+    def multiply_x(self, s:int):
+        return Point(self.x * s, self.y)
 
 
 POS4 = namedtuple('POS4', [

@@ -14,7 +14,7 @@ class Board():
     
     def update(self, keys):
         if keys[pygame.K_DOWN]:
-            self.piece.fall(self)
+            self.piece.quick_drop(self)
 
         if keys[pygame.K_LEFT] and keys[pygame.K_RIGHT]:
             self.piece.strafe(self, 0)
@@ -22,6 +22,8 @@ class Board():
             self.piece.strafe(self, -1)
         elif keys[pygame.K_RIGHT]:
             self.piece.strafe(self, 1)
+        
+        self.piece.fall(self)
 
     def init_board(self) -> list[list[Cell]]:
         return [[None for _ in range(10)] for _ in range(20)]

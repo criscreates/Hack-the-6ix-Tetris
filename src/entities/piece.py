@@ -62,18 +62,26 @@ class Piece():
 
 
     def draw(self):
+        block_size = self.config.images.piece_sides.x
+        board_offset = Point((BOARD_WIDTH * block_size)//2, 0)
+
+        def point_to_real(x):
+            return x.multiply(block_size).multiply_y(-1).add(Point(self.config.window.width//2-board_offset.x, self.config.window.height - block_size))
+
+
         return self.config.screen.blits((
+        #print((
             (self.config.images.piece_red
-            , self.origin.xy),
+            , point_to_real(self.origin).xy),
 
             (self.config.images.piece_red
-            , self.body[0].multiply(self.config.images.piece_sides.x).add(self.origin).xy),
-
+            , point_to_real(self.body[0].add(self.origin)).xy),
+            
             (self.config.images.piece_red
-            , self.body[1].multiply(self.config.images.piece_sides.x).add(self.origin).xy),
-
+            , point_to_real(self.body[1].add(self.origin)).xy),
+           
             (self.config.images.piece_red
-            , self.body[2].multiply(self.config.images.piece_sides.x).add(self.origin).xy),
+            , point_to_real(self.body[2].add(self.origin)).xy),
         ))
 
 
