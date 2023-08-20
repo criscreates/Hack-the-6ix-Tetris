@@ -18,7 +18,7 @@ class Tetris():
         pygame.init()
         pygame.display.set_caption("Tetris")
         window = Window(1920, 1080)
-        screen = pygame.display.set_mode((window.width, window.height), pygame.FULLSCREEN)
+        screen = pygame.display.set_mode((window.width, window.height))
         images = Images()
 
         self.config = GameConfig(
@@ -33,8 +33,6 @@ class Tetris():
 
     def play(self):
         board = Board(self.config, Piece(self.config, PieceType.T, 0))
-        board.piece.fall(board)
-        board.piece.fall(board)
 
         while True:
             for event in pygame.event.get():

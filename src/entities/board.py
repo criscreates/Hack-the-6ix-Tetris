@@ -2,6 +2,7 @@ import pygame
 from .piece import Piece
 from ..utils import GameConfig
 from ..utils import Cell
+from ..utils.constants import *
 
 class Board():
     def __init__(self, 
@@ -13,9 +14,7 @@ class Board():
         self.piece = piece
     
     def update(self, keys):
-        if keys[pygame.K_DOWN]:
-            self.piece.quick_drop(self)
-
+        # Strafes
         if keys[pygame.K_LEFT] and keys[pygame.K_RIGHT]:
             self.piece.strafe(self, 0)
         elif keys[pygame.K_LEFT]:
@@ -23,7 +22,17 @@ class Board():
         elif keys[pygame.K_RIGHT]:
             self.piece.strafe(self, 1)
         
-        self.piece.fall(self)
+        # Rotation
+        if keys[pygame.K_x]:
+            self.piece.rotate(self, RotationDirection.CW)
+        elif keys[pygame.K_z]:
+            self.piece.rotate(self, RotationDirection.CCW)
+        
+        # Falls
+        if keys[pygame.K_DOWN]:
+            self.piece.quick_drop(self)
+        else:
+            self.piece.fall(self)
 
     def init_board(self) -> list[list[Cell]]:
         return [[None for _ in range(10)] for _ in range(20)]
